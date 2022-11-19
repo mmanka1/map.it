@@ -5,28 +5,41 @@ const Search = () => {
     const [when, setWhen] = useState("");
     const [where, setWhere] = useState("");
     const [duration, setDuration] = useState("");
+    const [roomLocations, setRoomLocations] = useState([]);
+
+    useEffect(() => {
+        const fetchMapRoomData = async() => {
+            const mapperResponse = await fetch('http://localhost:5000/map/');
+            const content = await mapperResponse.json();
+            setRoomLocations(content);
+        }
+        fetchMapRoomData().catch((err) => {
+            console.error(err);
+        });
+    }, [])
         
     const handleSubmit = async(e) => {
         e.preventDefault();
-        console.log("hello");
-        //Use phrase and send it through to node app
-        const rawResponse = await fetch('http://localhost:5000/classifier/search', {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({"phrase": phrase})
-          });
-        const content = await rawResponse.json();
-        if (!content.error) {
-            setWhen(content.message.confidenceWhen);
-            setWhere(content.message.confidenceWhere);
-            setDuration(content.message.confidenceDuration);
+        try {
+            //Use phrase and send it through to node app
+            const classifierResponse = await fetch('http://localhost:5000/classify/search', {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"phrase": phrase})
+              });
+            const content = await classifierResponse.json();
+            if (!content.error) {
+                setWhen(content.message.confidenceWhen);
+                setWhere(content.message.confidenceWhere);
+                setDuration(content.message.confidenceDuration);
+            }
+        } catch (err) {
+            console.error(err);
         }
-        console.log(content.message);
     }
-
     return (
         <div>
             <h1>Map.it</h1>
@@ -39,6 +52,7 @@ const Search = () => {
                 <li>{when}</li>
                 <li>{duration}</li>
             </ul>
+            <text>{JSON.stringify(roomLocations)}</text>
         </div>
     )
 }

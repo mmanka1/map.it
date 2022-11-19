@@ -1,5 +1,8 @@
+//Necessary to use "require" in the ES module scope
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 
-const Examples = require('./trainingData');
+import examples from "./trainingData.mjs";
 
 //Get express
 const express = require('express');
@@ -27,17 +30,17 @@ router.post('/search', async(req, res) => {
         console.log(req.body.phrase);
         const responseWhen = await cohere.classify({
             inputs: [req.body.phrase],
-            examples: Examples.whenExamples
+            examples: examples.whenExamples
         });
         const responseWhere = await cohere.classify({
             model:'large',
             inputs: [req.body.phrase],
-            examples: Examples.whereExamples
+            examples: examples.whereExamples
         });
         const responseDuration = await cohere.classify({
             model:'large',
             inputs: [req.body.phrase],
-            examples: Examples.durationExamples
+            examples: examples.durationExamples
         });
 
         return res.json(
@@ -55,4 +58,4 @@ router.post('/search', async(req, res) => {
     }
 })
 
-module.exports = router
+export default router;

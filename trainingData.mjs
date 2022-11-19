@@ -194,4 +194,4 @@ const examples = {
     ],
 }
 
-module.exports = examples;
+export default examples;
