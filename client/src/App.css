@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  align-content: left;
+  border: 1px;
 }
 
 .App-logo {
@@ -14,14 +16,42 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #F3F3F3; */
+  background-image: linear-gradient(to bottom,#F3F3F3 90%, #E8EFFD);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 20px;
+  padding-bottom: 30px;
   font-size: calc(10px + 2vmin);
-  color: white;
+}
+
+img {
+  align-items: center;
+  align-content: center;
+  padding-left: 24.5%;
+  padding-top: 10px;
+}
+
+.times a {
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  color: black;
+  padding-left: 0.5%;
+  padding-right: 0.5%;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+}
+
+.times a:hover {
+	background-image: linear-gradient(to right, #2BA1E0 0%, #2B6DE0 51%);
+  border-radius: 8px;
+	color: #E7E7E7;
 }
 
 .App-link {
