@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 var bodyParser = require('body-parser');
 const port = 5000;
-const Search = require('./semanticSearch');
+const Search = require('./classifier');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -13,7 +13,7 @@ app.use(cors());
 app.options('*', cors());
 
 //Add router to middleware handling path
-app.use('/semantic', Search)
+app.use('/classifier', Search)
 
 //Set up listener
 app.listen(port, () => {

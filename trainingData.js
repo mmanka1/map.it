@@ -187,6 +187,10 @@ const examples = {
             "text": "I need to study for a while",
             "label": "2 hours"
         },
+        {
+            "text": "Need to work on a group project",
+            "label": "2 hours"
+        },
     ],
 }
 
