@@ -1,4 +1,6 @@
+import { logDOM } from '@testing-library/react';
 import {useState, useEffect} from 'react';
+
 
 const Search = () => {
     const [phrase, setPhrase] = useState("");
@@ -24,21 +26,21 @@ const Search = () => {
             setWhere(content.message.confidenceWhere);
             setDuration(content.message.confidenceDuration);
         }
-        console.log(content.message);
+        console.log(content);
     }
 
     return (
         <div>
-            <h1>Map.it</h1>
+            <h5>Create your booking in</h5>
+            <h4>AMIT CHAKMA ENGINEERING BUILDING, SECOND FLOOR</h4>
+            <br></br>   
+            <h5>What are you planning to do?</h5>
             <form onSubmit={handleSubmit}>
                 <input type="text" value={phrase} onChange={(e) => setPhrase(e.target.value)}/>
-                <button type = "submit">Search for rooms</button>
+                <br></br>
+                <button type = "submit">Search it!</button>
+                <br></br>
             </form>
-            <ul>
-                <li>{where}</li>
-                <li>{when}</li>
-                <li>{duration}</li>
-            </ul>
         </div>
     )
 }
