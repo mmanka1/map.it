@@ -89,6 +89,59 @@ button.main {
   -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;
   border-radius: 10px;
+  color: #2BA1E0;;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  justify-content: left;
+  text-align: left;
+  align-items: left;
+  cursor: default;
+  box-sizing: border-box;
+  margin: 15px;
+  font: 600 14px BaiJamjuree;
+  padding: 1px 10px 3px;
+  border-width: 2px;
+  border-color: #2BA1E0;
+  border-style:solid;
+  height: 30px;
+  margin-left: -93.25%;
+}
+
+button:hover {
+  -webkit-appearance: button;
+  -webkit-writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  border-radius: 10px;
+  color: #FFFFFF;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  justify-content: left;
+  text-align: left;
+  align-items: left;
+  cursor: default;
+  background-image: linear-gradient(to right, #2BA1E0 0%, #2B6DE0 51%);
+  box-sizing: border-box;
+  margin: 15px;
+  font: 500 14px BaiJamjuree;
+  padding: 1px 10px 3px;
+  border-width: 0px;
+  height: 30px;
+  margin-left: -93.25%;
+}
+
+button:active {
+  -webkit-appearance: button;
+  -webkit-writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  border-radius: 10px;
   color: #FFFFFF;
   letter-spacing: normal;
   word-spacing: normal;
