@@ -65,7 +65,7 @@ const Search = ({setVertices, setThreeDoFLocation}) => {
             <form onSubmit={handleSubmit}>
                 <input type="text" value={phrase} onChange={(e) => setPhrase(e.target.value)}/>
                 <br></br>
-                <button type = "submit">Search it!</button>
+                <button className="main" type = "submit">Search it!</button>
                 <br></br>
             </form>
         </div>
