@@ -11,6 +11,8 @@ function App() {
   const [threeDoF, setThreeDoF] = useState({});
   const [isManual, setIsManual] = useState(false);
   const [shouldReload, setShouldReload] = useState(false);
+  const [shouldShowBookings, setShouldShowBookings] = useState(false);
+  const [shouldShowTimes, setShouldShowTimes] = useState(true);
 
   useEffect(() => {
     setVertices(roomLabelVertices);
@@ -23,6 +25,7 @@ function App() {
   const setThreeDoFLocation = (loc) => {
     setIsManual(false); //Reset if being searched and set automatically
     setThreeDoF(loc);
+    setShouldShowBookings(true);
   };
 
   //Updating the time manually
@@ -42,14 +45,26 @@ function App() {
     }
   }
 
+  const setShowTimes = (flag) => {
+    setShouldShowTimes(flag);
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src = {mapitLogo} width='800px' height='150px'></img>
         <Search setVertices = {setVertices} setThreeDoFLocation={setThreeDoFLocation} reload={shouldReload}/>
-        <Map rooms = {roomLabelVertices.rooms} when = {threeDoF.when} where = {threeDoF.where} duration = {threeDoF.duration} isManual = {isManual} updateReload={updateReload} reload = {shouldReload}/>
-        <br></br>
-        <ShowTime when = {threeDoF.when} duration = {threeDoF.duration} updateTime = {updateWhenThreeDoF}/>
+        {
+          shouldShowBookings ? (
+            <>
+              <Map rooms = {roomLabelVertices.rooms} when = {threeDoF.when} where = {threeDoF.where} duration = {threeDoF.duration} isManual = {isManual} updateReload={updateReload} reload = {shouldReload} setShowTimes={setShowTimes}/>
+              <br></br>
+              <ShowTime when = {threeDoF.when} duration = {threeDoF.duration} updateTime = {updateWhenThreeDoF} shouldShowTimes = {shouldShowTimes}/>
+            </>
+          ) : (
+            <></>
+          )
+        }
       </header>
     </div>
   );

@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import mapImage from '../assets/ACEBmap.png';
 import BoundingBox from './boundingBox';
 
-const Map = ({rooms, when, where, duration, isManual, updateReload, reload}) => {
+const Map = ({rooms, when, where, duration, isManual, updateReload, reload, setShowTimes}) => {
     const [shouldHideMap, setShouldHideMap] = useState(false);
     const [bookingMsg, setBookingMsg] = useState("");
 
@@ -47,7 +47,7 @@ const Map = ({rooms, when, where, duration, isManual, updateReload, reload}) => 
                             rooms !== undefined ? (
                                 rooms.map(room => {
                                     return (
-                                        room.where === where ? <BoundingBox room = {room} when = {when} availabilities = {room.when} duration = {duration} isSetManually = {isManual} showBookingConfirmation = {showBookingConfirmation} reload = {reload} x = {x} y = {y}/> : <></>
+                                        room.where === where ? <BoundingBox room = {room} when = {when} availabilities = {room.when} duration = {duration} isSetManually = {isManual} showBookingConfirmation = {showBookingConfirmation} reload = {reload} setShowTimes={setShowTimes} x = {x} y = {y}/> : <></>
                                     )
                                 })
                             ) : (
@@ -59,15 +59,16 @@ const Map = ({rooms, when, where, duration, isManual, updateReload, reload}) => 
                 ) : (
                     <div> 
                         <h3>{bookingMsg}</h3>
-                        <button style = {{align: "center"}} onClick={(e) => { 
+                        <button onClick={(e) => { 
                             setShouldHideMap(false);
                             setBookingMsg("");
                             updateReload();
+                            setShowTimes(true);
+                            window.location.reload(false);
                         }}>
                         Make another booking
                         </button>
                     </div>
-                    
                 )
             }
         </>

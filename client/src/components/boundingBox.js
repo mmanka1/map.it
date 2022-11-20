@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 
-const BoundingBox = ({room, when, availabilities, duration, isSetManually, showBookingConfirmation, reload, x, y}) => {
+const BoundingBox = ({room, when, availabilities, duration, isSetManually, showBookingConfirmation, reload, setShowTimes, x, y}) => {
     const [isAvailable, setIsAvailable] = useState(false);
 
     useEffect(() => {
@@ -45,6 +45,7 @@ const BoundingBox = ({room, when, availabilities, duration, isSetManually, showB
                 setIsAvailable(true);
             }
         }
+       
     }, [room, when, availabilities, duration, isSetManually, reload])
 
     const handleBooking = async(e) => {
@@ -65,6 +66,7 @@ const BoundingBox = ({room, when, availabilities, duration, isSetManually, showB
 
             const bookingContent = await bookingResponse.json();
             showBookingConfirmation(bookingContent.message);
+            setShowTimes(false);
         } catch (err) {
             console.error(err);
         }
