@@ -43,6 +43,8 @@ router.post('/search', async(req, res) => {
             examples: examples.durationExamples
         });
 
+        console.log(responseWhen)
+
         return res.json(
             {
             "error": false, 
