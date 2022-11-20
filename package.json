@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/firestore": "^6.4.1",
     "@google-cloud/storage": "^6.7.0",
     "cohere-ai": "^4.4.0",
     "cors": "^2.8.5",
@@ -19,7 +20,7 @@
     "fs": "^0.0.1-security",
     "module": "^1.2.5",
     "node-fetch": "^3.3.0",
-    "path": "^0.12.7",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "path": "^0.12.7"
   }
 }

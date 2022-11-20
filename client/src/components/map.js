@@ -33,8 +33,10 @@ const Map = ({rooms, when, where, duration}) => {
             {
                 rooms !== undefined ? (
                     rooms.map(room => {
+                        console.log(room.where);
+                        console.log(where);
                         return (
-                            <BoundingBox room = {room} x = {x} y = {y}/>
+                            room.where === where ? <BoundingBox room = {room} when = {when} availabilities = {room.when} x = {x} y = {y}/> : <></>
                         )
                     })
                 ) : (

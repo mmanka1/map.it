@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 
-const BoundingBox = ({room, x, y}) => {
+const BoundingBox = ({room, when, availabilities, x, y}) => {
     return (
         <div style = {{
             opacity: 0.5,

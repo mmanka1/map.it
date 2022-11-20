@@ -3,26 +3,54 @@ import {useState, useEffect} from 'react';
 
 const Search = ({setVertices, setThreeDoFLocation}) => {
     const [phrase, setPhrase] = useState("");
-    const [when, setWhen] = useState("");
-    const [where, setWhere] = useState("");
-    const [duration, setDuration] = useState("");
-    const [roomLocations, setRoomLocations] = useState({});
+    // const [when, setWhen] = useState("");
+    // const [where, setWhere] = useState("");
+    // const [duration, setDuration] = useState("");
+    const [roomLocations, setRoomLocations] = useState({}); //room number and coordinates of the bounding boxes encapsulating the room location on the map
+    // const [allRooms, setAllRooms] = useState({});
+    // const [allAvailabilites, setAllAvailabilites] = useState({});
 
     useEffect(() => {
         const fetchMapRoomData = async() => {
+            //Extract rooms from maps
             const mapperResponse = await fetch('http://localhost:5000/map/');
-            const content = await mapperResponse.json();
-            const updatedContent = [];
-            content.rooms.forEach(room => {
-                updatedContent.push({
+            const mapperContent = await mapperResponse.json();
+
+            //Get all rooms
+            const roomsResponse = await fetch('http://localhost:5000/book/rooms');
+            const roomsContent = await roomsResponse.json();
+            console.log(roomsContent);
+
+            //Get all room availabilties for bookings
+            const availabilitiesResponse = await fetch('http://localhost:5000/book/availabilities');
+            const availabilitiesContent = await availabilitiesResponse.json();
+            console.log(availabilitiesContent);
+
+            //Update list of room objects from map
+            const updatedMapperContent = [];
+            mapperContent.rooms.forEach(room => {
+                //Get room type
+                const roomType = roomsContent.rooms.meeting.find(r => r === room.number) !== undefined ? "meeting" :
+                    (
+                        roomsContent.rooms.study.find(r => r === room.number) !== undefined ? "study" : "classroom"
+                    ) 
+
+                const roomAvailabilties = [] //Get times of the day room is available
+                for (const [key, value] of Object.entries(availabilitiesContent.availabilities)) {
+                    if (value.find(r => r === room.number) === undefined) {
+                        roomAvailabilties.push(key);
+                    }
+                }
+
+                updatedMapperContent.push({
                     ...room,
-                    when: when,
-                    where: where,
-                    duration: duration
+                    when: roomAvailabilties,
+                    where: roomType
                 })
+
+                console.log(updatedMapperContent);
             })
-            setRoomLocations({rooms: updatedContent});
-            setThreeDoFLocation({when: when, where: where, duration:duration});
+            setRoomLocations({rooms: updatedMapperContent});
         }
         fetchMapRoomData().catch((err) => {
             console.error(err);
@@ -40,17 +68,23 @@ const Search = ({setVertices, setThreeDoFLocation}) => {
                   'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({"phrase": phrase})
-              });
-            const content = await classifierResponse.json();
-            if (!content.error) {
-                setWhen(content.message.confidenceWhen);
-                setWhere(content.message.confidenceWhere);
-                setDuration(content.message.confidenceDuration);
+            });
+
+            const classifierContent = await classifierResponse.json();
+            console.log(classifierContent);
+
+            if (!classifierContent.error) {
+                //Set parameters (3 DoF) from predictions
+                setThreeDoFLocation({
+                    when: classifierContent.message.confidenceWhen, 
+                    where: classifierContent.message.confidenceWhere, 
+                    duration:classifierContent.message.confidenceDuration
+                });
             }
-            console.log(content);
 
             //Send room locations object through to parent App.js component
             setVertices(roomLocations);
+            
 
         } catch (err) {
             console.error(err);

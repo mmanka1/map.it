@@ -8,22 +8,22 @@ import {useState} from 'react';
 
 function App() {
   const [roomLabelVertices, setRoomLabelVertices] = useState({});
-  const [threeDoFLocation, setThreeDoFLocation] = useState({});
+  const [threeDoF, setThreeDoF] = useState({});
   const setVertices = (vertices) => {
     setRoomLabelVertices(vertices);
-  }
+  };
 
-  const setThreeDofLocation = (loc) => {
-    setThreeDoFLocation(loc);
-  }
+  const setThreeDoFLocation = (loc) => {
+    setThreeDoF(loc);
+  };
 
   return (
     <div className="App">
       <header className="App-header">
         <img src = {mapitLogo} width='800px' height='150px'></img>
-        <Search setVertices = {setVertices}/>
+        <Search setVertices = {setVertices} setThreeDoFLocation={setThreeDoFLocation}/>
         <h3>Here are the ideal room availabilities based on your prompt</h3>
-        <Map rooms = {roomLabelVertices.rooms} when = {threeDoFLocation.when} where = {threeDoFLocation.where} duration = {threeDoFLocation.duration}/>
+        <Map rooms = {roomLabelVertices.rooms} when = {threeDoF.when} where = {threeDoF.where} duration = {threeDoF.duration}/>
         <br></br>
         <ShowTime/>
       </header>
