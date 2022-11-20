@@ -4,12 +4,17 @@ import Map from './components/map';
 import ShowTime from './components/showTime'
 import './App.css';
 import mapitLogo from './assets/Logo.png'
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 function App() {
   const [roomLabelVertices, setRoomLabelVertices] = useState({});
   const [threeDoF, setThreeDoF] = useState({});
   const [isManual, setIsManual] = useState(false);
+  const [shouldReload, setShouldReload] = useState(false);
+
+  useEffect(() => {
+    setVertices(roomLabelVertices);
+  }, [shouldReload])
 
   const setVertices = (vertices) => {
     setRoomLabelVertices(vertices);
@@ -29,13 +34,20 @@ function App() {
     setIsManual(true);
   }
 
+  const updateReload = () => {
+    if (!shouldReload) {
+      setShouldReload(true);
+    } else {
+      setShouldReload(false);
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src = {mapitLogo} width='800px' height='150px'></img>
-        <Search setVertices = {setVertices} setThreeDoFLocation={setThreeDoFLocation}/>
-        <h3>Here are the ideal room availabilities based on your prompt</h3>
-        <Map rooms = {roomLabelVertices.rooms} when = {threeDoF.when} where = {threeDoF.where} duration = {threeDoF.duration} isManual = {isManual}/>
+        <Search setVertices = {setVertices} setThreeDoFLocation={setThreeDoFLocation} reload={shouldReload}/>
+        <Map rooms = {roomLabelVertices.rooms} when = {threeDoF.when} where = {threeDoF.where} duration = {threeDoF.duration} isManual = {isManual} updateReload={updateReload} reload = {shouldReload}/>
         <br></br>
         <ShowTime when = {threeDoF.when} duration = {threeDoF.duration} updateTime = {updateWhenThreeDoF}/>
       </header>

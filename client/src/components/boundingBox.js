@@ -1,9 +1,10 @@
 import {useState, useEffect} from 'react';
 
-const BoundingBox = ({room, when, availabilities, duration, isSetManually, x, y}) => {
+const BoundingBox = ({room, when, availabilities, duration, isSetManually, showBookingConfirmation, reload, x, y}) => {
     const [isAvailable, setIsAvailable] = useState(false);
 
     useEffect(() => {
+        console.log(reload);
         setIsAvailable(false);  //Reset availability
 
         if (!isSetManually) {   //Set automatically
@@ -44,7 +45,30 @@ const BoundingBox = ({room, when, availabilities, duration, isSetManually, x, y}
                 setIsAvailable(true);
             }
         }
-    }, [room, when, availabilities, duration, isSetManually])
+    }, [room, when, availabilities, duration, isSetManually, reload])
+
+    const handleBooking = async(e) => {
+        e.preventDefault();
+        try {
+            //Use phrase and send it through to node app
+            const bookingResponse = await fetch('http://localhost:5000/book/confirm', {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "time": when === "morning" ? "8AM" : (when === "afternoon" ? "1PM" : (when === "night" ? "5PM" : when)),
+                    "room": room.number
+                })
+            });
+
+            const bookingContent = await bookingResponse.json();
+            showBookingConfirmation(bookingContent.message);
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     return (
         <div style = {{
@@ -59,7 +83,7 @@ const BoundingBox = ({room, when, availabilities, duration, isSetManually, x, y}
         }}> 
         {
             isAvailable ? (
-                <button className="available" onClick = {(e) => console.log("im a button")}>Book it!</button>
+                <button className="available" onClick = {handleBooking}>Book it!</button>
             ) : (
                 <button className="unavailable">Unavailable</button>
             )

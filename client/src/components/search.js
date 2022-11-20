@@ -1,15 +1,10 @@
 import { logDOM } from '@testing-library/react';
 import {useState, useEffect} from 'react';
 
-const Search = ({setVertices, setThreeDoFLocation}) => {
+const Search = ({setVertices, setThreeDoFLocation, reload}) => {
     const [phrase, setPhrase] = useState("");
-    // const [when, setWhen] = useState("");
-    // const [where, setWhere] = useState("");
-    // const [duration, setDuration] = useState("");
     const [roomLocations, setRoomLocations] = useState({}); //room number and coordinates of the bounding boxes encapsulating the room location on the map
-    // const [allRooms, setAllRooms] = useState({});
-    // const [allAvailabilites, setAllAvailabilites] = useState({});
-
+    
     useEffect(() => {
         const fetchMapRoomData = async() => {
             //Extract rooms from maps
@@ -55,7 +50,7 @@ const Search = ({setVertices, setThreeDoFLocation}) => {
         fetchMapRoomData().catch((err) => {
             console.error(err);
         });
-    }, []);
+    }, [reload]);
         
     const handleSubmit = async(e) => {
         e.preventDefault();
