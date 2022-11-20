@@ -26,6 +26,7 @@ function App() {
         <Map rooms = {roomLabelVertices.rooms} when = {threeDoFLocation.when} where = {threeDoFLocation.where} duration = {threeDoFLocation.duration}/>
         <br></br>
         <ShowTime/>
+        
       </header>
     </div>
   );
