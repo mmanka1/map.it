@@ -111,7 +111,7 @@ button.main {
   margin-left: -93.25%;
 }
 
-button:hover {
+button.main:hover {
   -webkit-appearance: button;
   -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;
@@ -137,7 +137,7 @@ button:hover {
   margin-left: -93.25%;
 }
 
-button:active {
+button.main:active {
   -webkit-appearance: button;
   -webkit-writing-mode: horizontal-tb !important;
   text-rendering: auto;
