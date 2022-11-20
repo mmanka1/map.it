@@ -56,7 +56,7 @@ router.post('/search', async(req, res) => {
         })
     } catch (err) {
       console.error(err)
-      return res.json({"error": true, "messages": "Something went wrong"})
+      return res.json({"error": true, "message": "Something went wrong"})
     }
 })
 

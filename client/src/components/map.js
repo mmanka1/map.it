@@ -2,7 +2,10 @@ import {useState, useEffect, useRef} from 'react';
 import mapImage from '../assets/ACEBmap.png';
 import BoundingBox from './boundingBox';
 
-const Map = ({rooms, when, where, duration}) => {
+const Map = ({rooms, when, where, duration, isManual, updateReload, reload, setShowTimes}) => {
+    const [shouldHideMap, setShouldHideMap] = useState(false);
+    const [bookingMsg, setBookingMsg] = useState("");
+
     //Get the position of the map in the beginning
     useEffect(() => {
         getPosition();
@@ -27,44 +30,47 @@ const Map = ({rooms, when, where, duration}) => {
         const y = mapRef.current.offsetTop;
         setY(y);
     };
+
+    const showBookingConfirmation = (msg) => {
+        setShouldHideMap(true);
+        setBookingMsg(msg);
+    };
+
     return (
         <>
-            <img src = {mapImage} ref={mapRef} width='800px' height='280px'/>
             {
-                rooms !== undefined ? (
-                    rooms.map(room => {
-                        return (
-                            <BoundingBox room = {room} x = {x} y = {y}/>
-                        )
-                    })
+                !shouldHideMap ? (
+                    <>
+                        <h3>Here are the ideal room availabilities based on your prompt</h3>
+                        <img src = {mapImage} ref={mapRef} width='800px' height='280px'/>
+                        {
+                            rooms !== undefined ? (
+                                rooms.map(room => {
+                                    return (
+                                        room.where === where ? <BoundingBox room = {room} when = {when} availabilities = {room.when} duration = {duration} isSetManually = {isManual} showBookingConfirmation = {showBookingConfirmation} reload = {reload} setShowTimes={setShowTimes} x = {x} y = {y}/> : <></>
+                                    )
+                                })
+                            ) : (
+                                <></>
+                            ) 
+                        }
+                    </>
+                    
                 ) : (
-                    <></>
-                ) 
-            }
-            {/* {
-                rooms !== undefined ? (
-                    rooms.forEach(room => {
-                        console.log(Math.min(...room.vertices.map(coordinates => coordinates.x)));
-                    })
-                ) : (
-                    <></>
+                    <div> 
+                        <h3>{bookingMsg}</h3>
+                        <button onClick={(e) => { 
+                            setShouldHideMap(false);
+                            setBookingMsg("");
+                            updateReload();
+                            setShowTimes(true);
+                            window.location.reload(false);
+                        }}>
+                        Make another booking
+                        </button>
+                    </div>
                 )
-            } */}
-
-            {/* <div style = {{
-                            opacity: 0.5,
-                            position: 'absolute',
-                            background: 'green',
-                            left: x+700,
-                            top: y+100,
-                            height: 30,
-                            width: 50,
-                            zIndex: 1
-            }}></div> */}
-
-            {/* <h1>Position: </h1>
-            <h2>X: {x ?? "No result"}</h2>
-            <h2>Y: {y ?? "No result"}</h2> */}
+            }
         </>
     )
 }

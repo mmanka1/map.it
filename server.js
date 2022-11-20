@@ -10,6 +10,7 @@ const port = 5000;
 
 import Classify from './classifier.mjs';
 import MapReader from './mapReader.mjs';
+import Book from './bookings.mjs';
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -19,8 +20,9 @@ app.use(cors());
 app.options('*', cors());
 
 //Add routers to middleware handling path
-app.use('/classify', Classify)
-app.use('/map', MapReader)
+app.use('/classify', Classify);
+app.use('/map', MapReader);
+app.use('/book', Book);
 
 //Set up listener
 app.listen(port, () => {

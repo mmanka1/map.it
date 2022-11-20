@@ -11,14 +11,6 @@ const router = express.Router();
 //Get config
 require('dotenv').config();
 
-// //Google storage
-// const {Storage} = require('@google-cloud/storage');
-
-// const storage = new Storage({
-//     keyFilename: process.env.FIREBASE_KEY_FILE_NAME,
-//     projectId: process.env.FIREBASE_PROJECT_ID
-// });
-
 router.get('/', async(req, res) => {
     try {
         // The ID of your GCS bucket
