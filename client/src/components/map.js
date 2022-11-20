@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import mapImage from '../assets/ACEBmap.png';
 import BoundingBox from './boundingBox';
 
-const Map = ({rooms, when, where, duration}) => {
+const Map = ({rooms, when, where, duration, isManual}) => {
     //Get the position of the map in the beginning
     useEffect(() => {
         getPosition();
@@ -33,10 +33,8 @@ const Map = ({rooms, when, where, duration}) => {
             {
                 rooms !== undefined ? (
                     rooms.map(room => {
-                        console.log(room.where);
-                        console.log(where);
                         return (
-                            room.where === where ? <BoundingBox room = {room} when = {when} availabilities = {room.when} x = {x} y = {y}/> : <></>
+                            room.where === where ? <BoundingBox room = {room} when = {when} availabilities = {room.when} duration = {duration} isSetManually = {isManual} x = {x} y = {y}/> : <></>
                         )
                     })
                 ) : (

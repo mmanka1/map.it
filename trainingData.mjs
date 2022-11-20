@@ -151,6 +151,10 @@ const examples = {
             "label": "1 hour"
         },
         {
+            "text": "I want to study for 1 hour",
+            "label": "1 hour"
+        },
+        {
             "text": "I need to teach a class",
             "label": "1 hour"
         },
@@ -163,6 +167,14 @@ const examples = {
             "label": "1 hour"
         },
         //2 hours
+        {
+            "text": "I want to meet for a 2 hours",
+            "label": "2 hours"
+        },
+        {
+            "text": "I want to meet for a two hours",
+            "label": "2 hours"
+        },
         {
             "text": "I want to meet for a couple hours",
             "label": "2 hours"
